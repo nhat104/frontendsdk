@@ -19,7 +19,7 @@ axiosClient.interceptors.request.use(async (config) => {
       ? `Bearer ${user.access_token}`
       : '';
   }
-
+  // config.headers.common.Authorization = 'abc1';
   return config;
 });
 

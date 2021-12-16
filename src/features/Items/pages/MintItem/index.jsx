@@ -59,6 +59,7 @@ function MintItem(props) {
   const [openListGame, setOpenListGame] = useState(false);
   const [openListCategory, setOpenListCategory] = useState(false);
   const [nameGame, setNameGame] = useState('');
+  const [status, setStatus] = useState('');
   const client = create('https://ipfs.infura.io:5001/api/v0');
   const [securityCode, setSecurityCode] = useState('');
   const [urlIpfs, setUrlIpfs] = useState('');
@@ -132,6 +133,7 @@ function MintItem(props) {
         external_url: urlIpfs,
         quantity: data.get('Amount'),
         description: data.get('Description'),
+        status: data.get('Status') === 'Active' ? 1 : 2,
       };
       setDataUpload(payload);
       dispatch(saveDataToCreate(payload));
@@ -360,6 +362,27 @@ function MintItem(props) {
               name="Description"
               multiline
               maxRows={4}
+            />
+            <Autocomplete
+              disablePortal
+              id="status"
+              options={['Active', 'Coming Soon']}
+              value={status}
+              onChange={(event, newValue) => {
+                setStatus(newValue);
+              }}
+              sx={{ mt: 1, mb: 1 }}
+              renderInput={(params) => (
+                <TextField
+                  name="Status"
+                  required
+                  {...params}
+                  label="Status"
+                  InputProps={{
+                    ...params.InputProps,
+                  }}
+                />
+              )}
             />
             <LoadingButton
               type="submit"
